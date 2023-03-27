@@ -97,7 +97,7 @@
         <div class="container content">
             <div class="row mb-5">
                 <div class="col-12">
-                    <h2 class="text-right fs-1 fw-bolder">New Products</h2>
+                    <h2 class="text-right fs-1 fw-bolder">New Arrivals</h2>
                 </div>  
             </div> 
 
@@ -106,6 +106,7 @@
                     <div class="card" style="width: 18rem;">
                         <img src="assets/images/product-img-000.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
+                            <h5 class="card-title text-center">Sony</h5> 
                             <h4 class="card-title text-center">Playstation Portable</h4>                            
                             <h4 class="text-uppercase text-center fw-bold">LKR 80,000.00</h4>
                         </div>
@@ -113,27 +114,31 @@
                 </div>  
                 <div class="col-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="assets/images/product-img-000.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/product-img-0001.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h4 class="card-title text-center">Playstation Portable</h4>                            
+                            <h5 class="card-title text-center">JBL</h5> 
+                            <h4 class="card-title text-center">Gaming Headset</h4>                            
+                            <h4 class="text-uppercase text-center fw-bold">LKR 65,000.00</h4>
+                        </div>
+                    </div>
+                </div>  
+                <div class="col-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="assets/images/product-img-002.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Sennheiser</h5> 
+                            <h4 class="card-title text-center">MOMENTUM True Wireless 3 Earbuds</h4>                            
                             <h4 class="text-uppercase text-center fw-bold">LKR 80,000.00</h4>
                         </div>
                     </div>
                 </div>  
                 <div class="col-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="assets/images/product-img-000.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/MSI-Laptop-i7.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h4 class="card-title text-center">Playstation Portable</h4>                            
-                            <h4 class="text-uppercase text-center fw-bold">LKR 80,000.00</h4>
-                        </div>
-                    </div>
-                </div>  
-                <div class="col-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="assets/images/product-img-000.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h4 class="card-title text-center">Playstation Portable</h4>                            
+                            <h5 class="card-title text-center">MSI</h5>                              
+                            <h4 class="card-title text-center">Core i7 Gaming Laptop</h4>                            
+                          
                             <h4 class="text-uppercase text-center fw-bold">LKR 80,000.00</h4>
                         </div>
                     </div>
