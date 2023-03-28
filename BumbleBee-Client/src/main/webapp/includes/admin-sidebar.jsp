@@ -38,52 +38,41 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="categories.jsp">
+            <a class="nav-link collapsed" href="inventory.jsp">
                 <i class="bi bi-box-seam"></i>
                 <span>Inventory</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="categories.jsp">
+            <a class="nav-link collapsed" href="orders.jsp">
                 <i class="bi bi-box-seam"></i>
                 <span>Orders</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="categories.jsp">
+            <a class="nav-link collapsed" href="loans.jsp">
                 <i class="bi bi-cash-coin"></i>
                 <span>Loans</span>
             </a>
         </li>
-
+        
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-files"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="add-new-product.jsp">
-                        <i class="bi bi-circle"></i><span>Sales</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="products.jsp">
-                        <i class="bi bi-circle"></i><span>Products</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Tables Nav -->
-
-        <li class="nav-heading">My Account</li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="profile.jsp">
+            <a class="nav-link collapsed" href="users.jsp">
                 <i class="bi bi-person"></i>
-                <span>Profile</span>
+                <span>Registered Users</span>
             </a>
-        </li><!-- End Profile Page Nav -->
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="sales.jsp">
+                <i class="bi bi-files"></i>
+                <span>Sales Report</span>
+            </a>
+        </li>
+
+        <li class="nav-heading">Quick Links</li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="../index.jsp">
