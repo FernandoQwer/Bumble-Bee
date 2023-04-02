@@ -37,52 +37,26 @@
 
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>ASUS</td>
-                            <td>
-                                <img src="../assets/images/brands/asus.png" width="120px" alt="Asus Logo">
-                            </td>
-                            <td>ABC Imports PVT Ltd</td>                            
-                            <td class="text-center">02</td>
-                            <td class="text-center">
-                                <a href="#"><i class="bi bi-pencil-square text-info"></i></a>                                
-                                <a href="#"><i class="bi bi-trash text-danger"></i></a>
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Apple</td>
-                            <td>USA</td>
-                            <td>GenNxt PVT Ltd</td>                            
-                            <td class="text-center">12</td>
-                            <td class="text-center">
-                                <a href="#"><i class="bi bi-pencil-square text-info"></i></a>                                
-                                <a href="#"><i class="bi bi-trash text-danger"></i></a>
-
-                            </td>
-                        </tr>
+                    <tbody class="brandsRow">
                     </tbody>
+
                 </table>
             </div>
             <div class="col-md-4 col-12 bg-white p-4 rounded shadow mx-2">
                 <h3 class="fw-bold">Add New Brand</h3>
 
-                <form class="mt-3">
+                <form class="mt-3" id="addNewBrand">
                     <div class="mb-3">
                         <label for="brandName" class="form-label">Brand Name</label>
                         <input type="text" class="form-control" id="brandName">
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Logo</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <input class="form-control" type="file" id="logo">
                     </div>
                     <div class="mb-3">
                         <label for="brandName" class="form-label">Supplier</label>
-                        <input type="text" class="form-control" id="brandName">
+                        <input type="text" class="form-control" id="supplier">
                     </div>
                     <button type="submit" class="btn btn-primary">Add New Brand</button>
                 </form>
@@ -92,5 +66,73 @@
 
 </main><!-- End #main -->
 
+
+<script>
+    const brands_url = "http://localhost:8080/BumbleBee-WebServices/api/brands/all";
+    const add_new_brand_url = "http://localhost:8080/BumbleBee-WebServices/api/brands/add-new-brand";
+
+
+    // Get All Brands
+    $.ajax({
+        type: "GET",
+        url: brands_url,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            $.each(response, function (key, val) {
+                var brandsRow = `
+                        <tr>
+                            <th scope="row">` + val.id + `</th>
+                            <td>` + val.name + `</td>
+                            <td>
+                                <img src="../` + val.imagePath + `" width="120px" alt="` + val.name + ` Logo">
+                            </td>
+                            <td>` + val.supplier + `</td>                            
+                            <td class="text-center">02</td>
+                            <td class="text-center">
+                                <a href="#"><i class="bi bi-pencil-square text-info"></i></a>                                
+                                <a href="#"><i class="bi bi-trash text-danger"></i></a>
+                            </td>
+                        </tr>`;
+
+                $(".brandsRow").append(brandsRow);
+            });
+        }
+    });
+
+
+//    $(document).ready(function () {
+//        // Add New Brand
+//        $("#addNewBrand").submit(function (event) {
+//
+//            var formData = {
+//                name: $("#brandName").val(),
+//                supplier: $("#supplier").val(),
+//                logo: $('#logo')[0].files[0];
+//            };
+//
+//            var formData = new FormData();
+//            formData.append('name', name);
+//            formData.append('supplier', price);
+//            formData.append('image', logo);
+//
+//            // Create New Brand
+//            $.ajax({
+//                url: add_new_brand_url,
+//                type: 'POST',
+//                data: formData,
+//                processData: false,
+//                contentType: false,
+//                success: function (response) {
+//                    alert(response);
+//                },
+//                error: function (xhr, status, error) {
+//                    alert("Error: " + error);
+//                }
+//            });
+//        });
+//    });
+
+</script>
 
 <%@ include file="../includes/admin-footer.jsp" %>
