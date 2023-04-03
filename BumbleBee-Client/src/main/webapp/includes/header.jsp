@@ -24,7 +24,11 @@
         <!-- Poppins -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
 
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="assets/css/main.css">
+
+        <!--JS Cookies-->
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
         <title>Bumble Bee</title>
     </head>
@@ -54,8 +58,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a href="login.jsp" type="button" class="btn btn-outline-light rounded-pill btn-lg px-4">Login</a>
-                    <!-- <button type="button" class="btn btn-outline-info rounded-pill">Login</button> -->
+                    <span class="nav-btn"></span>
                 </nav>
             </div>
         </div>

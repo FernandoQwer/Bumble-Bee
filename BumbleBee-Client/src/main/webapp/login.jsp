@@ -16,17 +16,17 @@
                 </div>
                 <div class="col-6 p-5">  
                     <h3 class="mb-3 mt-5">Login to continue</h3>
-                    <form class="login-form">
+                    <form class="login-form" id="loginForm">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password">
                         </div>
-                            <button type="submit" class="btn btn-primary rounded-pill px-4 mt-2">Sign In</button>
+                        <button type="button" id="loginBtn" class="btn btn-primary rounded-pill px-4 mt-2">Sign In</button>
                     </form> 
                     <p>New User? <a href="register.jsp">Sign Up</a></<p>
                 </div>
@@ -35,6 +35,45 @@
     </div>
     <!--Login Form Ends-->
 </div>
+
+<script>
+
+    const login_url = "http://localhost:8080/BumbleBee-WebServices/api/user/login";
+
+    $(document).ready(function () {
+
+        $("#loginBtn").click(function (event) {
+            event.preventDefault();
+
+            var formData = {
+                email: $("#email").val(),
+                password: $("#password").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: login_url,
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    Cookies.set('userId', data.userId);
+                    Cookies.set('role', data.role);
+
+                    if (data.role === "admin") {
+                        window.location.replace("admin/dashboard.jsp");
+                    }
+                },
+                error: function (data) {
+                    console.log(data.responseJSON);
+
+                }
+            });
+        });
+    });
+
+</script>
 
 <%@ include file="includes/footer.jsp" %>
 

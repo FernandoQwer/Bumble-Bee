@@ -95,6 +95,20 @@ Author : SANDUNI FERNANDO
 </footer>
 <!-- Footer -->
 
+<script>
+    let userId = Cookies.get('userId');
+    let userRole = Cookies.get('role');
+    let loginBtn;
+
+    if (userId === undefined) {
+        loginBtn = `<a href="login.jsp" type="button" class="btn btn-outline-light rounded-pill btn-lg px-4">Login</a>`;
+        $(".nav-btn").append(loginBtn);
+    } else {
+        loginBtn = `<a href="admin/dashboard.jsp" type="button" class="btn btn-outline-light rounded-pill btn-lg px-4">Admin Panel</a>`;
+        $(".nav-btn").append(loginBtn);
+    }
+</script>
+
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

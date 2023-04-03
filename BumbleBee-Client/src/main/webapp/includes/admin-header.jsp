@@ -34,6 +34,18 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
         <link href="../assets/css/style.css" rel="stylesheet">
+
+        <!--JS Cookies-->
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+
+        <script>
+            function logout() {
+                Cookies.remove('userId');
+                Cookies.remove('role');
+                window.location.replace("../index.jsp");
+            }
+        </script>
     </head>
 
     <body>
@@ -171,7 +183,7 @@
                             </li>
 
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <a class="dropdown-item d-flex align-items-center" onclick="logout()" href="#">
                                     <i class="bi bi-box-arrow-right"></i>
                                     <span>Sign Out</span>
                                 </a>

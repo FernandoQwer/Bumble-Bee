@@ -12,7 +12,7 @@ public class Brand {
 
     private static Brand instance;
 
-    private int id;
+    private final int id;
     private String name;
     private String supplier;    
     private String imagePath;

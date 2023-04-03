@@ -27,6 +27,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.commons.io.FilenameUtils;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  *
@@ -34,8 +38,9 @@ import org.apache.commons.io.FilenameUtils;
  */
 @Path("/brands")
 public class BrandServices {
+
     private final BrandManager brandManager = BrandManager.getInstance();
-    
+
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,5 +48,18 @@ public class BrandServices {
         Gson gson = new Gson();
         return gson.toJson(brandManager.getBrands());
     }
+
+//    @POST
+//    @Path("/add-new-brand")
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    public String addNewBrand(
+//        @FormDataParam("name") String name,
+//        @FormDataParam("image") FormDataContentDisposition fileDisposition,
+//        @FormDataParam("image") FormDataMultiPart file
+//    ) {       
+//
+//        Gson gson = new Gson();
+//        return gson.toJson(name);
+//    }
 
 }

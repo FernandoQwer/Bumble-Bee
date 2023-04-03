@@ -6,7 +6,7 @@
 
 <%@ include file="includes/header.jsp" %>
 
-<div style="padding-top: 80px;"></div>
+<div style="padding-top: 80px; "></div>
 
 <%@ include file="includes/footer.jsp" %>
 
