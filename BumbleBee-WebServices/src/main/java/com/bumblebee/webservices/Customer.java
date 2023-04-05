@@ -21,8 +21,9 @@ public class Customer extends User{
     private String addressLineTwo;
     private String city;
     private Date createdAt;
+    private double creditBalance;
 
-    public Customer(int customerId, String firstName, String lastName, Date dob, String nic, String mobile, String addressLineOne, String addressLineTwo, String city, Date createdAt, int id, String email, String password, String role, String status) {
+    public Customer(int customerId, String firstName, String lastName, Date dob, String nic, String mobile, String addressLineOne, String addressLineTwo, String city, Date createdAt, double creditBalance, int id, String email, String password, String role, String status) {
         super(id, email, password, role, status);
         this.customerId = customerId;
         this.firstName = firstName;
@@ -34,8 +35,10 @@ public class Customer extends User{
         this.addressLineTwo = addressLineTwo;
         this.city = city;
         this.createdAt = createdAt;
+        this.creditBalance = creditBalance;
     }
 
+    
     public int getCustomerId() {
         return customerId;
     }
@@ -116,5 +119,11 @@ public class Customer extends User{
         this.createdAt = createdAt;
     }
 
-    
+    public double getCreditBalance() {
+        return creditBalance;
+    }
+
+    public void setCreditBalance(double creditBalance) {
+        this.creditBalance = creditBalance;
+    }
 }

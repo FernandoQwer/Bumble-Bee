@@ -17,8 +17,9 @@ import java.util.List;
  * @author SANDUNI FERNANDO
  */
 public class CategoryManager {
+
     private static CategoryManager instance;
-    
+
     // DB 
     Connection conn = DBUtil.getConnection();
 
@@ -45,11 +46,10 @@ public class CategoryManager {
         return categories;
     }
 
-    
     // Add New Category
     public boolean addCategory(String json) {
         Category c = new Gson().fromJson(json, Category.class);
-        
+
         try {
             Statement st = conn.createStatement();
             st.executeUpdate("INSERT INTO categories (category) "
@@ -65,7 +65,7 @@ public class CategoryManager {
     // Update Category
     public boolean updateCategory(int categoryId, String json) {
         Category c = new Gson().fromJson(json, Category.class);
-        
+
         try {
             Statement st = conn.createStatement();
             st.executeUpdate("UPDATE categories SET category = '" + c.getCategory() + "' WHERE id =" + categoryId);
@@ -75,9 +75,9 @@ public class CategoryManager {
         }
         return false;
     }
-    
+
     // Delete Category
-    public boolean deleteCategory(int categoryId){
+    public boolean deleteCategory(int categoryId) {
         try {
             Statement st = conn.createStatement();
             st.executeUpdate("DELETE FROM categories WHERE id =" + categoryId);
@@ -85,7 +85,8 @@ public class CategoryManager {
             return true;
         } catch (SQLException ex) {
         }
-        
+
         return false;
     }
+    
 }

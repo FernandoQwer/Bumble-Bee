@@ -66,10 +66,66 @@
 
 </main><!-- End #main -->
 
+<!-- Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="updateCategoryForm">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Update Brand</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body update-modal">
+                    <div class="mb-3">
+                        <div class="update-input"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script>
     const brands_url = "http://localhost:8080/BumbleBee-WebServices/api/brands/all";
     const add_new_brand_url = "http://localhost:8080/BumbleBee-WebServices/api/brands/add-new-brand";
+    const delete_brand_url = "http://localhost:8080/BumbleBee-WebServices/api/brands/delete-brand?id=";
+
+    // Delete Category
+    function deleteBrand(id) {
+        $.ajax({
+            type: "DELETE",
+            url: delete_brand_url + id,
+            success: function (response) {
+                location.reload();
+            }
+        });
+    }
+
+    // Update Category
+    function updateBrand(id, brand, image) {
+        $(".update-input").empty();
+
+        $('#updateModal').modal('show');
+
+        var modelInputs = `
+                <img src="` + image + `" width="150px" class="mb-5">
+                <br>
+                <label for="brandName" class="form-label">Brand Name</label>
+                <input type="text" class="form-control" id="updateBrand" name="updateBrand" value="` + brand + `">
+                <label for="formFile" class="form-label mt-2">Logo</label>
+                <input class="form-control" type="file" id="updateLogo">
+                <input type="hidden" id="id" value="` + id + `">`;
+
+        $(".update-input").append(modelInputs);
+
+        $("#updateCategory").val(category);
+        $("#id").val(id);
+    }
 
 
     // Get All Brands
@@ -85,13 +141,13 @@
                             <th scope="row">` + val.id + `</th>
                             <td>` + val.name + `</td>
                             <td>
-                                <img src="../` + val.imagePath + `" width="120px" alt="` + val.name + ` Logo">
+                                <img src="` + val.imagePath + `" width="120px" alt="` + val.name + ` Logo">
                             </td>
                             <td>` + val.supplier + `</td>                            
                             <td class="text-center">02</td>
                             <td class="text-center">
-                                <a href="#"><i class="bi bi-pencil-square text-info"></i></a>                                
-                                <a href="#"><i class="bi bi-trash text-danger"></i></a>
+                                <a href="#"><i class="bi bi-pencil-square text-info" onclick="updateBrand(` + val.id + `, '` + val.name + `', '` + val.imagePath + `')"></i></a>                                
+                                <a href="#"><i class="bi bi-trash text-danger" onclick="deleteBrand(` + val.id + `)"></i></a>
                             </td>
                         </tr>`;
 
@@ -101,37 +157,48 @@
     });
 
 
-//    $(document).ready(function () {
-//        // Add New Brand
-//        $("#addNewBrand").submit(function (event) {
-//
-//            var formData = {
-//                name: $("#brandName").val(),
-//                supplier: $("#supplier").val(),
-//                logo: $('#logo')[0].files[0];
-//            };
-//
-//            var formData = new FormData();
-//            formData.append('name', name);
-//            formData.append('supplier', price);
-//            formData.append('image', logo);
-//
-//            // Create New Brand
-//            $.ajax({
-//                url: add_new_brand_url,
-//                type: 'POST',
-//                data: formData,
-//                processData: false,
-//                contentType: false,
-//                success: function (response) {
-//                    alert(response);
-//                },
-//                error: function (xhr, status, error) {
-//                    alert("Error: " + error);
-//                }
-//            });
-//        });
-//    });
+    $(document).ready(function () {
+
+        const form = $('#addNewBrand');
+        const inputElement = $('#logo');
+
+        inputElement.on('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                let imageData = reader.result;
+
+                form.on('submit', (event) => {
+                    event.preventDefault();
+
+                    var formData = {
+                        name: $("#brandName").val(),
+                        supplier: $("#supplier").val(),
+                        imagePath: imageData
+                    };
+
+                    console.log(formData);
+
+                    $.ajax({
+                        url: add_new_brand_url,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(formData),
+                        dataType: "json",
+                        encode: true,
+                        success: function (response) {
+                            location.reload();
+                        }
+                    });
+                });
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+
+    });
 
 </script>
 

@@ -36,57 +36,7 @@
 
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>1</td>                           
-                            <td>Rs. 12,000.00</td>
-                            <td>
-                                <table class="table table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Installment</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col">Due date</th>
-                                            <th scope="col">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Rs. 4,000.00</td>
-                                            <td>2023/03/15</td>
-                                            <td>
-                                                <span class="badge bg-success">Paid</span>
-                                            </td>
-                                        <tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Rs. 4,000.00</td>
-                                            <td>2023/03/15</td>
-                                            <td>
-                                                <span class="badge bg-secondary">Pending</span>
-                                            </td>
-                                        <tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Rs. 4,000.00</td>
-                                            <td>2023/03/15</td>
-                                            <td>
-                                                <span class="badge bg-secondary">Pending</span>
-                                            </td>
-                                        <tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                Jane Doe<br>077 123 4567<br>2000000000X
-                            </td>
-                            <td>2022/04/15</td>
-                            <td class="text-center">
-                                <span class="badge bg-warning">Active</span>
-                            </td>
-                        </tr>
+                    <tbody class="loan-row">
                     </tbody>
                 </table>
             </div>
@@ -95,5 +45,78 @@
 
 </main><!-- End #main -->
 
+<script>
+    const loans_url = "http://localhost:8080/BumbleBee-WebServices/api/loan/all";
+
+
+    // Get All Loans
+    $.ajax({
+        type: "GET",
+        url: loans_url,
+        dataType: "json",
+        success: function (response) {
+            $.each(response, function (key, value) {
+
+                // Loan Installments
+                let loanInstallments = "";
+                $.each(value.loanInstallments, function (index, loanInstallment) {
+                    let installmentStatus;
+
+                    if (loanInstallment.installmentStatus === "paid") {
+                        installmentStatus = `<span class="badge bg-success">Paid</span>`;
+                    } else {
+                        installmentStatus = `<span class="badge bg-secondary">Pending</span>`;
+
+                    }
+
+                    loanInstallments += `<tr>
+                                            <td>` + loanInstallment.installmentNo + `</td>
+                                            <td>LKR ` + value.monthlyInstallment + `</td>
+                                            <td>` + loanInstallment.dueDate + `</td>
+                                            <td>` + installmentStatus + `</td>
+                                        <tr>`;
+                });
+
+                let status;
+
+                if (value.loanstatus === "pending") {
+                    status = `<span class="badge bg-info">Pending</span>`;
+                } else if (value.loanstatus === "paid") {
+                    status = `<span class="badge bg-success">paid</span>`;
+                } else {
+                    status = `<span class="badge bg-danger">Canceled</span>`;
+                }
+
+                var loanRow = `<tr>
+                                    <th scope="row">`+ value.loanId +`</th>
+                                    <td>`+ value.orderId +`</td>                           
+                                    <td>LKR `+ value.loanAmount +`</td>
+                                    <td>
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Installment</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Due date</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>`+ loanInstallments +`</tbody>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        `+ value.customerName +`<br>`+ value.customerMobile +`<br>`+ value.customerNIC +`
+                                    </td>
+                                    <td>`+ value.loanDate +`</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-warning">Active</span>
+                                    </td>
+                                </tr>`;
+
+                $(".loan-row").append(loanRow);
+            });
+        }
+    });
+</script>
 
 <%@ include file="../includes/admin-footer.jsp" %>

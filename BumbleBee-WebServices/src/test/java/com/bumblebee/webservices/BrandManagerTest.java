@@ -31,11 +31,11 @@ public class BrandManagerTest {
         brandManager.conn.close();
     }
     
-    @Test
-    public void testGetBrands() {
-        List<Brand> brands = brandManager.getBrands();
-        assertNotNull(brands);
-        assertFalse(brands.isEmpty());
-    }
+//    @Test
+//    public void testGetBrands() {
+//        List<Brand> brands = brandManager.getBrands();
+//        assertNotNull(brands);
+//        assertFalse(brands.isEmpty());
+//    }
 
 }

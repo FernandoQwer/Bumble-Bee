@@ -23,7 +23,7 @@
     <section class="section">
         <div class="row my-5">
             <div class="col-12 bg-white p-3 rounded shadow mx-2">
-                <table id="usersTable" class="display" style="width:100%">
+                <table id="usersTable" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col">Customer ID</th>
@@ -38,23 +38,8 @@
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td scope="row">1</td>
-                            <td>Jane Doe</td>                           
-                            <td>jane@gmail.com</td>
-                            <td>0771234567</td>
-                            <td>1999/01/01</td>
-                            <td>99000000V</td>
-                            <td>2023/02/14</td>
-                            <td>Rs. 7,000.00</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-danger">Block</button>
-                            </td>
-                        </tr>
+                    <tbody class="customer-row">
+
                     </tbody>
                 </table>
             </div>
@@ -64,8 +49,60 @@
 </main><!-- End #main -->
 
 <script>
+    const get_customers_url = "http://localhost:8080/BumbleBee-WebServices/api/user/registered-customers";
+    const update_status_url = "http://localhost:8080/BumbleBee-WebServices/api/user/change-status?user=";
+
+    function changeStatus(userId, status) {
+        $.ajax({
+            type: "PATCH",
+            url: update_status_url + userId + "&status=" + status
+        }).done(function () {
+            location.reload();
+        });
+    }
+
+
+    // Get All Customers
+    $.ajax({
+        type: "GET",
+        url: get_customers_url,
+        dataType: "json",
+        success: function (response) {
+            $.each(response, function (key, value) {
+                let status;
+                let changeStatusBtn;
+
+                if (value.status === "active") {
+                    status = `<span class="badge bg-success">Active</span>`;
+                    changeStatusBtn = `<button class="btn btn-sm btn-danger" onclick="changeStatus(` + value.id + `, 'blocked')">Block</button>`;
+                } else {
+                    status = `<span class="badge bg-danger">Blocked</span>`;
+                    changeStatusBtn = `<button class="btn btn-sm btn-success" onclick="changeStatus(` + value.id + `, 'active')">Activate</button>`;
+                }
+
+                var customerRow = `
+                <tr>
+                    <td scope="row">` + value.customerId + `</td>
+                    <td>` + value.firstName + ` ` + value.lastName + `</td>                           
+                    <td>` + value.email + `</td>
+                    <td>` + value.mobile + `</td>
+                    <td>` + value.dob + `</td>
+                    <td>` + value.nic + `</td>
+                    <td>` + value.createdAt + `</td>
+                    <td>LKR ` + value.creditBalance + `</td>
+                    <td>` + status + `</td>
+                    <td class="text-center">` + changeStatusBtn + `</td>
+                </tr>`;
+
+                $(".customer-row").append(customerRow);
+            });
+        }
+    });
+
     $(document).ready(function () {
-        $('#usersTable').DataTable();
+        setTimeout(function () {
+            $('#usersTable').DataTable();
+        }, 500);
     });
 </script>
 

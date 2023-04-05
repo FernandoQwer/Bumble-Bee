@@ -4,11 +4,16 @@
  */
 package com.bumblebee.webservices;
 
+import com.google.gson.Gson;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -16,8 +21,9 @@ import java.util.List;
  * @author SANDUNI FERNANDO
  */
 public class BrandManager {
+
     private static BrandManager instance;
-    
+
     // DB 
     Connection conn = DBUtil.getConnection();
 
@@ -27,7 +33,7 @@ public class BrandManager {
         }
         return instance;
     }
-    
+
     // Get All Categories
     public List<Brand> getBrands() {
         List<Brand> brands = new ArrayList<>();
@@ -38,7 +44,7 @@ public class BrandManager {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String supplier = resultSet.getString("supplier");
-                String imagePath = resultSet.getString("image_path");
+                String imagePath = resultSet.getString("image");
 
                 brands.add(new Brand(id, name, supplier, imagePath));
             }
@@ -46,5 +52,35 @@ public class BrandManager {
         }
         return brands;
     }
-    
+
+    // DELETE Brand
+    public boolean deleteBrand(int brandId) {
+        try {
+            Statement st = conn.createStatement();
+            st.executeUpdate("DELETE FROM brands WHERE id =" + brandId);
+
+            return true;
+        } catch (SQLException ex) {
+        }
+        return false;
+    }
+
+    // Add New Category
+    public boolean addBrand(String json) throws SQLException {
+        Brand b = new Gson().fromJson(json, Brand.class);
+
+        String image = b.getImagePath();
+
+        try {
+            Statement st = conn.createStatement();
+            st.executeUpdate("INSERT INTO brands (name, supplier, image) "
+                    + "VALUES ('" + b.getName() + "', '" + b.getSupplier() + "', '" + image + "')");
+
+            return true;
+        } catch (SQLException ex) {
+        }
+
+        return false;
+    }
+
 }

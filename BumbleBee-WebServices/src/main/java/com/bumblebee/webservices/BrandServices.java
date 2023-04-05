@@ -5,32 +5,17 @@
 package com.bumblebee.webservices;
 
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import javax.ws.rs.Consumes;
+
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.apache.commons.io.FilenameUtils;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-
-import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  *
@@ -49,17 +34,33 @@ public class BrandServices {
         return gson.toJson(brandManager.getBrands());
     }
 
-//    @POST
-//    @Path("/add-new-brand")
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    public String addNewBrand(
-//        @FormDataParam("name") String name,
-//        @FormDataParam("image") FormDataContentDisposition fileDisposition,
-//        @FormDataParam("image") FormDataMultiPart file
-//    ) {       
-//
-//        Gson gson = new Gson();
-//        return gson.toJson(name);
-//    }
+    @POST
+    @Path("/add-new-brand")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addNewBrand(String json) throws SQLException {
+         Gson gson = new Gson();
 
+        if (brandManager.addBrand(json)) {
+            return Response.status(200).entity(
+                    gson.toJson("Brand Added Successfully!")
+            ).build();
+        } else {
+            return Response.status(501).entity(gson.toJson("Something Went Wrong!")).build();
+        }
+    }
+
+    // Delete Category
+    @DELETE
+    @Path("/delete-brand")
+    public Response deleteBrand(@QueryParam("id") int brandId) {
+        Gson gson = new Gson();
+
+        if (brandManager.deleteBrand(brandId)) {
+            return Response.status(200).entity(
+                    gson.toJson("Brand Deleted Successfully!")
+            ).build();
+        } else {
+            return Response.status(501).entity(gson.toJson("Something Went Wrong!")).build();
+        }
+    }
 }
